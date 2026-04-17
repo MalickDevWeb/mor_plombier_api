@@ -18,6 +18,7 @@ Route::post('/orders', [OrderController::class, 'store']);
 
 // Admin routes (accessible via the private dashboard)
 Route::get('/admin/orders', [OrderController::class, 'index']);
+Route::get('/admin/stats', [OrderController::class, 'getStats']);
 Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus']);
 Route::patch('/admin/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus']);
 

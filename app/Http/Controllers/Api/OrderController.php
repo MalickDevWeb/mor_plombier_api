@@ -101,6 +101,20 @@ class OrderController extends Controller
     }
 
     /**
+     * Get statistics for the admin dashboard.
+     */
+    public function getStats()
+    {
+        return response()->json([
+            'total_orders' => Order::count(),
+            'pending_orders' => Order::where('status', 'pending')->count(),
+            'total_revenue' => Order::where('payment_status', 'paid')->sum('total_price'),
+            'total_products' => \App\Models\Product::count(),
+            'recent_orders' => OrderResource::collection(Order::with(['items.service', 'items.product'])->latest()->take(5)->get())
+        ]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
