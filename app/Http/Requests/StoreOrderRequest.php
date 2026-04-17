@@ -32,6 +32,7 @@ class StoreOrderRequest extends FormRequest
             'items.*.product_id' => 'nullable|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.price' => 'required|integer|min:0',
+            'payment_method' => 'nullable|string|in:whatsapp,wave,orange',
         ];
     }
 }

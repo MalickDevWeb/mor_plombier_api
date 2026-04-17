@@ -41,7 +41,7 @@ class OrderController extends Controller
                     'address' => $validated['address'],
                     'total_price' => $totalPrice,
                     'status' => 'pending',
-                    'payment_method' => 'cash',
+                    'payment_method' => $validated['payment_method'] ?? 'whatsapp',
                     'payment_status' => 'pending',
                 ]);
 
@@ -78,7 +78,21 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'status' => 'required|string|in:pending,completed,processing,cancelled'
+            'status' => 'required|string|in:pending,confirmed,in_progress,completed,cancelled'
+        ]);
+
+        $order->update($validated);
+
+        return new OrderResource($order->load(['items.service', 'items.product']));
+    }
+
+    /**
+     * Update the payment status of the specified resource.
+     */
+    public function updatePaymentStatus(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            'payment_status' => 'required|string|in:pending,paid,failed'
         ]);
 
         $order->update($validated);

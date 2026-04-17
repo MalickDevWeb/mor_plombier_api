@@ -19,6 +19,7 @@ Route::post('/orders', [OrderController::class, 'store']);
 // Admin routes (accessible via the private dashboard)
 Route::get('/admin/orders', [OrderController::class, 'index']);
 Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus']);
+Route::patch('/admin/orders/{order}/payment-status', [OrderController::class, 'updatePaymentStatus']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
