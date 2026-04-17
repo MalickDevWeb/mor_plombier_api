@@ -12,6 +12,8 @@ class PlumbingSeeder extends Seeder
 {
     public function run(): void
     {
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+
         // Clear existing data
         Product::truncate();
         Service::truncate();
